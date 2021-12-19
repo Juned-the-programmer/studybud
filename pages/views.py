@@ -3,11 +3,14 @@ from room.models import *
 from django.contrib.auth.models import User,auth
 from django.contrib import messages
 from django.contrib.auth import authenticate , login , logout
+from django.contrib.auth.decorators import login_required
 from .models import *
 from django.db.models import Q
 
 # Create your views here.
+@login_required(login_url="login")
 def index(request):
+    
     q = request.GET.get('q') if request.GET.get('q') != None else ''
 
     rooms = Room.objects.filter(
